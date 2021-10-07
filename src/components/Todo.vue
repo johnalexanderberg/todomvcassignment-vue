@@ -1,11 +1,11 @@
 <template>
-  <div :class="[todo.isCompleted ? 'isCompleted' : '']" @mouseenter="hover = true" @mouseleave="hover = false">
+  <li :class="[todo.isCompleted ? 'isCompleted' : '']" @mouseenter="hover = true" @mouseleave="hover = false">
     <Button @onClick="$emit('onClick', todo.id)" :todo="todo"/>
     <h2>{{ todo.text }}</h2>
     <div v-if="hover">
-    <DeleteButton @onClick="$emit('onDeleteClick', todo.id)" :todo="todo"/>
+    <DeleteButton @onDeleteClick="$emit('onDeleteClick', todo.id)" :todo="todo"/>
     </div>
-  </div>
+  </li>
 </template>
 
 <script>
@@ -35,7 +35,7 @@ export default {
 
 <style scoped>
 
-div {
+li {
   display: flex;
   align-items: center;
 }

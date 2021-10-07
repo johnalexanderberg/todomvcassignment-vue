@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li :key="todo.id" v-for="todo in todos">
-      <Todo @onClick="$emit('onClick', todo.id)" :todo="todo"/>
+      <Todo @onDeleteClick="$emit('onDeleteClick', todo.id)" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
     </li>
   </ul>
 </template>

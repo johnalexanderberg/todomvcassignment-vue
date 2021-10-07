@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <AddTodo/>
-    <Todos @onClick="handleCompletedClick" :todos="todos"/>
+    <Todos @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick" :todos="todos"/>
 
   </div>
 </template>
@@ -29,6 +29,10 @@ export default {
           todo.isCompleted = !todo.isCompleted;
         }
       })
+    },
+    handleDeleteClick(id){
+      console.log(id)
+      this.todos = this.todos.filter((todo) => todo.id !== id);
     }
   },
   created() {

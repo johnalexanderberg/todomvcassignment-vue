@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AddTodo/>
+    <AddTodo @onSubmit="handleSubmit" />
     <Todos @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick" :todos="todos"/>
 
   </div>
@@ -10,6 +10,7 @@
 
 import AddTodo from './components/AddTodo.vue'
 import Todos from './components/Todos.vue'
+
 
 export default {
   name: 'App',
@@ -23,35 +24,37 @@ export default {
     }
   },
   methods: {
-    handleCompletedClick(id){
+    handleCompletedClick(id) {
       this.todos.forEach(todo => {
-        if (todo.id === id){
+        if (todo.id === id) {
           todo.isCompleted = !todo.isCompleted;
         }
       })
     },
-    handleDeleteClick(id){
-      console.log(id)
+    handleDeleteClick(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
+    },
+    handleSubmit(text) {
+
+      let trimmedText = text.trim();
+
+      if (trimmedText.length === 0){
+        return
+      }
+
+      const newTodo = {
+        id: Math.round(Math.random() * 100000),
+        text: text,
+        isCompleted: false
+      }
+
+      this.todos.push(newTodo)
+
     }
   },
   created() {
     this.todos = [
-      {
-        id: 1,
-        text: 'Doctors Appointment',
-        isCompleted: true
-      },
-      {
-        id: 2,
-        text: 'Meeting at School',
-        isCompleted: true
-      },
-      {
-        id: 3,
-        text: 'Create Todo App',
-        isCompleted: false
-      }
+//get from local storage
     ]
   }
 }

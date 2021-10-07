@@ -1,13 +1,25 @@
 <template>
   <header class="header">
     <h1>todos</h1>
-    <input class="new-todo" type="text" placeholder="What needs to be done?">
+    <form @submit="$emit('onSubmit', text)" @submit.prevent="preventDefault"><input v-model="text" class="todo" type="text" placeholder="What needs to be done?"></form>
   </header>
 </template>
 
 <script>
+
 export default {
-  name: "AddTodo"
+  name: "AddTodo",
+  data() {
+    return{
+      text: ''
+    }
+  },
+  methods: {
+    preventDefault() {
+      this.text = '';
+    }
+  },
+  emits: ['onSubmit'],
 }
 </script>
 
@@ -38,7 +50,7 @@ input::placeholder {
   font-style: italic;
 }
 
-.new-todo, .edit {
+.todo {
   position: relative;
   width: 100%;
   font-size: 24px;
@@ -51,7 +63,7 @@ input::placeholder {
   -webkit-font-smoothing: antialiased;
 }
 
-.new-todo {
+.todo {
   padding: 16px 16px 16px 60px;
   border: none;
   background: rgba(0, 0, 0, 0.003);

@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <div :key="todo.id" v-for="todo in todos">
+  <ul>
+    <li :key="todo.id" v-for="todo in todos">
       <Todo @onClick="$emit('onClick', todo.id)" :todo="todo"/>
-
-    </div>
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -25,5 +24,13 @@ export default {
 </script>
 
 <style scoped>
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
 
 </style>

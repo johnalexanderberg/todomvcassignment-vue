@@ -34,7 +34,7 @@ input {
 }
 
 input::placeholder {
-  color: #E2E2E2;
+  color: #dedede;
   font-style: italic;
 }
 

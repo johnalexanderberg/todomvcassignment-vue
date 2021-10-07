@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button @click="$emit('onClick', todo.id)">
-      <svg :class="[todo.isCompleted ? 'isCompleted' : '']" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+    <button :class="[todo.isCompleted ? 'isCompleted' : '']" @click="$emit('onClick', todo.id)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
         <path d="M0 0h24v24H0V0z" fill="none"/>
         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
       </svg>
@@ -24,9 +24,12 @@ export default {
 
 svg{
   visibility: hidden;
+  fill: #4fe585;
+  width: 24px;
+  height: 24px;
 }
 
-.isCompleted{
+.isCompleted svg{
   visibility: visible;
 }
 
@@ -39,6 +42,12 @@ button {
   border: solid #eeeeee 1px;
   display: inline;
   margin: 8px;
+}
+
+button.isCompleted {
+
+  border: solid #dbdbdb 1px;
+
 }
 
 

@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <AddTodo @onSubmit="handleSubmit" />
-    <Todos @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick" :todos="todos"/>
+    <AddTodo @onSubmit="handleSubmit"/>
+    <Todos @onToggleAll="handleToggleAll" @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick"
+           :todos="todos" :toggleState="toggleState"/>
 
   </div>
 </template>
@@ -20,44 +21,102 @@ export default {
   },
   data() {
     return {
-      todos: []
+      todos: [],
+      toggleState: Boolean
     }
   },
   methods: {
+    handleToggleAll(toggleState) {
+
+      this.todos.forEach(todo => {
+        todo.isCompleted = toggleState ? true : false
+      });
+
+      this.toggleState = toggleState;
+
+      this.saveTodos();
+      this.saveToggleState();
+    },
     handleCompletedClick(id) {
       this.todos.forEach(todo => {
         if (todo.id === id) {
           todo.isCompleted = !todo.isCompleted;
         }
       })
+
+      console.log('test' ,this.toggleState)
+
+      if (this.toggleState){
+        this.toggleState = false;
+      }
+      this.saveToggleState();
+      this.saveTodos();
     },
     handleDeleteClick(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
+      this.saveTodos();
     },
     handleSubmit(text) {
 
       let trimmedText = text.trim();
 
-      if (trimmedText.length === 0){
+      if (trimmedText.length === 0) {
         return
       }
 
       const newTodo = {
+        //todo: always make unique IDs
         id: Math.round(Math.random() * 100000),
         text: text,
         isCompleted: false
       }
 
       this.todos.push(newTodo)
+      this.saveTodos();
 
-    }
+    },
+    saveTodos() {
+      console.log('saving')
+      const parsed = JSON.stringify(this.todos);
+      localStorage.setItem('todos', parsed);
+    },
+    saveToggleState() {
+
+      const parsed = JSON.stringify(this.toggleState);
+      localStorage.setItem('todoToggle', parsed);
+    },
   },
-  created() {
-    this.todos = [
-//get from local storage
-    ]
+
+
+  mounted() {
+    //load stored todos
+    if (localStorage.getItem('todos')) {
+      try {
+        this.todos = JSON.parse(localStorage.getItem('todos'));
+      } catch (e) {
+        localStorage.removeItem('todos');
+      }
+    }
+
+    //load toggle state
+    console.log('load Togglestate')
+    if (localStorage.getItem('todoToggle')) {
+      try {
+        console.log('stored', localStorage.getItem('todoToggle'))
+        this.toggleState = JSON.parse(localStorage.getItem('todoToggle'));
+      } catch (e) {
+        localStorage.removeItem('todoToggle');
+      }
+    }
+
   }
+
 }
+
+
+
+
+
 </script>
 
 <style>

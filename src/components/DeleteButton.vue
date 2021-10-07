@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <button @click="$emit('onDeleteClick', todo.id)">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
         <path d="M0 0h24v24H0V0z" fill="none"/>
@@ -23,6 +23,12 @@ export default {
 
 <style scoped>
 
+.container {
+  visibility: hidden;
+}
+.container.visible{
+  visibility: visible;
+}
 
 svg {
   fill: #a51818;
@@ -38,6 +44,7 @@ svg:hover {
 
 
 button {
+  position: relative;
   border-radius: 100%;
   background-color: white;
   height: 32px;

@@ -2,8 +2,8 @@
   <li :class="[todo.isCompleted ? 'isCompleted' : '']" @mouseenter="hover = true" @mouseleave="hover = false">
     <Button @onClick="$emit('onClick', todo.id)" :todo="todo"/>
     <h2>{{ todo.text }}</h2>
-    <div v-if="hover">
-    <DeleteButton @onDeleteClick="$emit('onDeleteClick', todo.id)" :todo="todo"/>
+    <div>
+    <DeleteButton :class="[hover ? 'visible' : '']" @onDeleteClick="$emit('onDeleteClick', todo.id)" :todo="todo"/>
     </div>
   </li>
 </template>
@@ -38,13 +38,16 @@ export default {
 li {
   display: flex;
   align-items: center;
+
 }
 
 h2 {
+  overflow-wrap: anywhere;
+  line-height: 1.8rem;
   margin-left: 12px;
   width: 100%;
   font-size: 24px;
-  font-weight: 300;
+  font-weight: 100;
   text-align: left;
 }
 

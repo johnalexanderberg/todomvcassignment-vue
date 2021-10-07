@@ -1,5 +1,6 @@
 <template>
   <ul>
+    <ToggleAllButton @onToggleAll="onToggleAll" :toggleState="toggleState"></ToggleAllButton>
     <li :key="todo.id" v-for="todo in todos">
       <Todo @onDeleteClick="$emit('onDeleteClick', todo.id)" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
     </li>
@@ -9,17 +10,25 @@
 <script>
 
 import Todo from './Todo.vue'
+import ToggleAllButton from './ToggleAllButton.vue'
 
 
 export default {
   name: "Todos",
   props: {
-    todos: Array
+    todos: Array,
+    toggleState: Boolean
   },
   components: {
+    ToggleAllButton,
     Todo
   },
-  emits: ['onClick']
+  methods: {
+    onToggleAll(toggleState){
+      this.$emit('onToggleAll', toggleState)
+    }
+  },
+  emits: ['onClick', 'onToggleAll']
 }
 </script>
 

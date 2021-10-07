@@ -12,6 +12,7 @@
 import AddTodo from './components/AddTodo.vue'
 import Todos from './components/Todos.vue'
 
+//todo ToggleAllButtons ska bara synas om det finns todos i listan
 
 export default {
   name: 'App',
@@ -44,8 +45,6 @@ export default {
         }
       })
 
-      console.log('test' ,this.toggleState)
-
       if (this.toggleState){
         this.toggleState = false;
       }
@@ -54,6 +53,9 @@ export default {
     },
     handleDeleteClick(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
+
+      //todo if remaining items are all completed, toggle toggleAll
+
       this.saveTodos();
     },
     handleSubmit(text) {
@@ -76,7 +78,6 @@ export default {
 
     },
     saveTodos() {
-      console.log('saving')
       const parsed = JSON.stringify(this.todos);
       localStorage.setItem('todos', parsed);
     },
@@ -99,10 +100,8 @@ export default {
     }
 
     //load toggle state
-    console.log('load Togglestate')
     if (localStorage.getItem('todoToggle')) {
       try {
-        console.log('stored', localStorage.getItem('todoToggle'))
         this.toggleState = JSON.parse(localStorage.getItem('todoToggle'));
       } catch (e) {
         localStorage.removeItem('todoToggle');

@@ -51,7 +51,7 @@ h2 {
   text-align: left;
 }
 
-div.isCompleted h1 {
+li.isCompleted h2 {
   color: #e3e3e3;
   text-decoration: line-through;
 }

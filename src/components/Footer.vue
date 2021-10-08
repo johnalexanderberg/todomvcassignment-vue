@@ -1,6 +1,6 @@
 <template>
     <footer id="navigation">
-        <span id="todo-count"> {{ counter }} item left</span>
+        <span id="todo-count"> {{ todos.length }} {{todos.length > 1 ? 'items' : 'item'}} left</span>
         <div class="buttons">
             <button>All</button>
             <button>Active</button>
@@ -17,7 +17,7 @@ export default {
     props: {
         todos: Object,
         counter: Number
-    }
+    },
 }
 
 
@@ -34,7 +34,7 @@ export default {
 #todo-count {
     float: left;
     text-align: center;
-    
+
 }
 #navigation {
     border-top: 1px solid #e6e6e6;
@@ -48,7 +48,7 @@ export default {
     margin: 3px;
     padding: 3px 7px;
     text-decoration: none;
-    
+
     text-align: center;
 }
 button:hover {

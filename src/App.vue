@@ -3,7 +3,7 @@
     <AddTodo @onSubmit="handleSubmit"/>
     <Todos @onToggleAll="handleToggleAll" @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick"
            :todos="todos" :toggleState="toggleState"/>
-
+    <Footer v-if='todos.length > 0' :todos="todos" />
   </div>
 </template>
 
@@ -11,6 +11,7 @@
 
 import AddTodo from './components/AddTodo.vue'
 import Todos from './components/Todos.vue'
+import Footer from './components/Footer.vue'
 
 //todo ToggleAllButtons ska bara synas om det finns todos i listan
 
@@ -19,11 +20,13 @@ export default {
   components: {
     AddTodo,
     Todos,
+    Footer
   },
   data() {
     return {
       todos: [],
-      toggleState: Boolean
+      toggleState: Boolean,
+      counter: Number
     }
   },
   methods: {
@@ -38,6 +41,16 @@ export default {
       this.saveTodos();
       this.saveToggleState();
     },
+    handleCounter() {
+      this.todos.forEach(todo => {
+        if (todo.isCompleted === false) {
+        this.counter++
+      }
+      else {this.counter--}
+      })
+      
+    },
+    
     handleCompletedClick(id) {
       this.todos.forEach(todo => {
         if (todo.id === id) {
@@ -55,11 +68,10 @@ export default {
       this.todos = this.todos.filter((todo) => todo.id !== id);
 
       //todo if remaining items are all completed, toggle toggleAll
-
       this.saveTodos();
+
     },
     handleSubmit(text) {
-
       let trimmedText = text.trim();
 
       if (trimmedText.length === 0) {
@@ -86,6 +98,7 @@ export default {
       const parsed = JSON.stringify(this.toggleState);
       localStorage.setItem('todoToggle', parsed);
     },
+    
   },
 
 

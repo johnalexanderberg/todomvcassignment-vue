@@ -42,6 +42,7 @@ li {
 }
 
 h2 {
+  padding: 15px 15px 15px 0px;
   overflow-wrap: anywhere;
   line-height: 1.8rem;
   margin-left: 12px;

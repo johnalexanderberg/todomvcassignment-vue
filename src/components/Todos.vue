@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <ToggleAllButton @onToggleAll="onToggleAll" :toggleState="toggleState"></ToggleAllButton>
+    <ToggleAllButton v-if='todos.length > 0' @onToggleAll="onToggleAll" :toggleState="toggleState"></ToggleAllButton>
     <li :key="todo.id" v-for="todo in todos">
       <Todo @onDeleteClick="$emit('onDeleteClick', todo.id)" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
     </li>

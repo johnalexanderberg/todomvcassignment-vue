@@ -1,6 +1,6 @@
 <template>
     <footer id="navigation">
-        <span id="todo-count"> {{ todos.length }} {{todos.length > 1 ? 'items' : 'item'}} left</span>
+        <span id="todo-count"> {{ todos.filter((todo) => todo.isCompleted === false).length }} {{todos.filter((todo) => todo.isCompleted === false).length === 1 ? 'item' : 'items'}} left</span>
         <div class="buttons">
             <button>All</button>
             <button>Active</button>

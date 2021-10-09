@@ -83,7 +83,8 @@ export default {
         //todo: always make unique IDs
         id: Math.round(Math.random() * 100000),
         text: text,
-        isCompleted: false
+        isCompleted: false,
+        isEditing: false
       }
 
       this.toggleState = false;

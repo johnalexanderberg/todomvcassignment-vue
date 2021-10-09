@@ -22,6 +22,9 @@ export default {
 
 <style scoped>
 
+div.editing {
+  visibility: hidden;
+}
 svg{
   visibility: hidden;
   fill: #4fe585;

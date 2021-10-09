@@ -2,7 +2,7 @@
   <ul>
     <ToggleAllButton v-if='todos.length > 0' @onToggleAll="onToggleAll" :toggleState="toggleState"></ToggleAllButton>
     <li :key="todo.id" v-for="todo in todos">
-      <Todo @onDeleteClick="$emit('onDeleteClick', todo.id)" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
+      <Todo :isEditing="isEditing" @onSubmit="handleEdit" @onDblClick="handleDblClick" @onDeleteClick="$emit('onDeleteClick', todo.id)" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
     </li>
   </ul>
 </template>
@@ -23,10 +23,49 @@ export default {
     ToggleAllButton,
     Todo
   },
+  data() {
+    return {
+    isEditing : false
+    }
+  },
   methods: {
     onToggleAll(toggleState){
       this.$emit('onToggleAll', toggleState)
-    }
+    },
+    handleDblClick(id){
+      if (this.isEditing === false){
+        this.isEditing = true;
+
+        this.todos.forEach((todo) => {
+          if (todo.id === id){
+            todo.isEditing = true
+          }
+        })
+      } else {
+        this.todos.forEach((todo) => {
+          if (todo.isEditing === true){
+            todo.isEditing = false;
+
+            this.todos.forEach((todo) => {
+              if (todo.id === id) {
+                todo.isEditing = true;
+              }
+            })
+
+          }
+
+        })
+      }
+      },
+    handleEdit(id){
+      console.log(id)
+      this.isEditing = false;
+      this.todos.forEach((todo) => {
+        if (todo.id === id){
+          todo.isEditing = false;
+        }
+      })
+    },
   },
   emits: ['onClick', 'onToggleAll']
 }

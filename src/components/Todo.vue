@@ -1,10 +1,10 @@
 <template>
   <li :class="[todo.isCompleted ? 'isCompleted' : '']" @mouseenter="hover = true" @mouseleave="hover = false">
-    <Button :class="[isEditing ? 'editing' : '']" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
-    <form :class="[isEditing ? 'editing' : '']" @submit="handleEdit" @submit.prevent="preventDefault"><input v-model="todo.text" class="edit" type="text"></form>
-    <h2 :class="[isEditing ? 'editing' : '']" > {{ todo.text }}</h2>
+    <Button :class="[todo.isEditing ? 'editing' : '']" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
+    <form :class="[todo.isEditing ? 'editing' : '']" @submit="$emit('onSubmit', todo.id)" @submit.prevent="preventDefault"><input v-model="todo.text" class="edit" type="text"></form>
+    <h2 :class="[todo.isEditing ? 'editing' : '']" @dblclick="$emit('onDblClick', todo.id)" > {{ todo.text }} </h2>
     <div>
-    <DeleteButton :class="[hover ? 'visible' : '', isEditing ? 'editing' : '']" @onDeleteClick="$emit('onDeleteClick', todo.id)" :todo="todo"/>
+    <DeleteButton :class="[hover ? 'visible' : '', todo.isEditing ? 'editing' : '']" @onDeleteClick="$emit('onDeleteClick', todo.id)" :todo="todo"/>
     </div>
   </li>
 </template>
@@ -24,13 +24,17 @@ export default {
   data() {
     return{
     hover: false,
-      isEditing: true
     }
   },
   props: {
-    todo: Object
+    todo: Object,
+    isEditing: Boolean
   },
+  methods: {
+    preventDefault() {
 
+    }
+  },
   emits: ['onClick', 'onDeleteClick']
 }
 </script>
@@ -38,6 +42,7 @@ export default {
 <style scoped>
 
 li {
+  height: 50px;
   display: flex;
   align-items: center;
 
@@ -55,18 +60,24 @@ h2, input {
   text-align: left;
 }
 
+h2.editing {
+  display: none;
+}
+
+
 form{
   display: none;
   box-sizing: border-box;
 }
 
 form.editing{
-  display: block;
+  display: flex;
 }
 input{
   box-shadow:inset 0 0 6px 0px rgba(104, 104, 104, 0.22);
   padding: 8px 12px;
   margin: 0;
+  width: 100%;
   outline: none;
   border: 1px solid #959595;
 }

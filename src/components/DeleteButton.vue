@@ -30,6 +30,10 @@ export default {
   visibility: visible;
 }
 
+.container.editing{
+  display: none;
+}
+
 svg {
   fill: #a51818;
   width: 24px;

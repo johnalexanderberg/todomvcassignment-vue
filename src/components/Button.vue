@@ -41,7 +41,7 @@ button {
   outline: none;
   border: solid #eeeeee 1px;
   display: inline;
-  margin: 8px;
+  margin-left: 8px;
 }
 
 button.isCompleted {

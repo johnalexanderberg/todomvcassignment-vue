@@ -13,7 +13,6 @@ import AddTodo from './components/AddTodo.vue'
 import Todos from './components/Todos.vue'
 import Footer from './components/Footer.vue'
 
-//todo ToggleAllButtons ska bara synas om det finns todos i listan
 
 export default {
   name: 'App',
@@ -48,9 +47,9 @@ export default {
       }
       else {this.counter--}
       })
-      
+
     },
-    
+
     handleCompletedClick(id) {
       this.todos.forEach(todo => {
         if (todo.id === id) {
@@ -58,16 +57,18 @@ export default {
         }
       })
 
-      if (this.toggleState){
-        this.toggleState = false;
+      this.toggleState = false;
+
+      if (this.todos.filter((todo) => todo.isCompleted).length === this.todos.length){
+        this.toggleState = true;
       }
+
       this.saveToggleState();
       this.saveTodos();
     },
     handleDeleteClick(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
 
-      //todo if remaining items are all completed, toggle toggleAll
       this.saveTodos();
 
     },
@@ -85,6 +86,9 @@ export default {
         isCompleted: false
       }
 
+      this.toggleState = false;
+
+
       this.todos.push(newTodo)
       this.saveTodos();
 
@@ -98,7 +102,7 @@ export default {
       const parsed = JSON.stringify(this.toggleState);
       localStorage.setItem('todoToggle', parsed);
     },
-    
+
   },
 
 

@@ -26,13 +26,30 @@ namespace assignmentToDoMVC
             // Replace with your own test logic.
             browser.Url = "http://192.168.1.182:8080/";
             var input = browser.FindElementByCssSelector("[type='text']");
-            input.SendKeys("Clean");
+            input.SendKeys("Crash on a deserted island");
             input.SendKeys(Keys.Enter);
 
             var listElement = browser.FindElementByCssSelector("h2");
             
-            Assert.AreEqual("Clean", listElement.Text);
+            Assert.AreEqual("Crash on a deserted island", listElement.Text);
         }
+
+        [TestMethod]
+        public void noItemsLeftTest()
+        {
+            browser.Url = "http://192.168.1.182:8080/";
+            var input = browser.FindElementByCssSelector("[type='text']");
+            input.SendKeys("Try to escape the island");
+            input.SendKeys(Keys.Enter);
+            var tick1 = browser.FindElementByCssSelector("[id='todo-count']");
+            Assert.AreEqual("1 item left", tick1.Text);
+
+            browser.FindElement().Click();
+            var tick2 = browser.FindElementByCssSelector("[id='todo-count']");
+            Assert.AreEqual("0 items left", tick2.Text);
+
+        }
+
         [TestMethod]
         public void countTest()
         {

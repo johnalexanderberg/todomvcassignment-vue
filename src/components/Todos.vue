@@ -2,7 +2,7 @@
   <ul>
     <ToggleAllButton v-if='todos.length > 0' @onToggleAll="onToggleAll" :toggleState="toggleState"></ToggleAllButton>
     <li :key="todo.id" v-for="todo in todos">
-      <Todo :isEditing="isEditing" @onSubmit="handleEdit" @onDblClick="handleDblClick" @onDeleteClick="$emit('onDeleteClick', todo.id)" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
+      <Todo @onOutsideClick="handleOutsideClick" :isEditing="isEditing" @onSubmit="handleEdit" @onDblClick="handleDblClick" @onDeleteClick="$emit('onDeleteClick', todo.id)" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
     </li>
   </ul>
 </template>
@@ -29,6 +29,12 @@ export default {
     }
   },
   methods: {
+    handleOutsideClick(id){
+
+      alert(id)
+
+      //this.isEditing = false;
+    },
     onToggleAll(toggleState){
       this.$emit('onToggleAll', toggleState)
     },
@@ -58,7 +64,6 @@ export default {
       }
       },
     handleEdit(id){
-      console.log(id)
       this.isEditing = false;
       this.todos.forEach((todo) => {
         if (todo.id === id){

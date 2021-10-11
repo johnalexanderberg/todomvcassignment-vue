@@ -5,8 +5,8 @@
       }} {{ todos.filter((todo) => todo.isCompleted === false).length === 1 ? 'item' : 'items' }} left</span>
     <div class="buttons">
       <button @click="handleAllClick">All</button>
-      <button>Active</button>
-      <button>Completed</button>
+      <button @click="handleActiveClick">Active</button>
+      <button @click="handleCompletedClick">Completed</button>
     </div>
   </footer>
 </template>
@@ -22,9 +22,22 @@ export default {
   },
   methods: {
     handleAllClick() {
+      location.hash = '';
+      location.reload();
 
-    }
-  }
+    },
+    handleCompletedClick() {
+      location.hash = '#completed';
+      location.reload();
+    },
+    handleActiveClick() {
+      location.hash = '#active';
+      location.reload();
+
+    },
+
+  },
+
 }
 
 

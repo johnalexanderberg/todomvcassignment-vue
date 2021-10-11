@@ -146,7 +146,7 @@ export default {
 
   mounted() {
 
-    window.addEventListener('hashchange', function () {})
+    window.addEventListener('hashchange', function () {      location.reload();})
 
     //load stored todos
     if (localStorage.getItem('todos')) {

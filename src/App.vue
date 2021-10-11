@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app" @click="handleOutsideClick" @change="handleHashChange">
     <main>
       <AddTodo @onSubmit="handleSubmit"/>
-      <Todos @onToggleAll="handleToggleAll" @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick"
+      <Todos :filter="filter" @onToggleAll="handleToggleAll" @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick"
              :todos="todos" :toggleState="toggleState"/>
       <Footer v-if='todos.length > 0' :todos="todos"/>
     </main>
@@ -38,15 +38,31 @@ export default {
   },
   data() {
     return {
+      filter: String,
       todos: [],
       toggleState: Boolean,
+      isEditing: Boolean,
       counter: Number
     }
   },
   methods: {
 
-    handleClick(){
-      alert('click!')
+    handleHashChange(e) {
+      console.log(e);
+    },
+    handleOutsideClick(event) {
+
+        for (let i = 0; i < this.todos.length; i++) {
+          console.log(this.todos[i].id, 'isEditing: ', this.todos[i].isEditing);
+          if (this.todos[i].isEditing === true && !event.target.classList.contains('edit')) {
+            console.log('isEditing is true & clicked outside of ', this.todos[i].id)
+            console.log(event.target)
+            this.todos[i].isEditing = false;
+            this.isEditing = false;
+
+          }
+        }
+
     },
 
     handleToggleAll(toggleState) {
@@ -63,9 +79,10 @@ export default {
     handleCounter() {
       this.todos.forEach(todo => {
         if (todo.isCompleted === false) {
-        this.counter++
-      }
-      else {this.counter--}
+          this.counter++
+        } else {
+          this.counter--
+        }
       })
 
     },
@@ -79,7 +96,7 @@ export default {
 
       this.toggleState = false;
 
-      if (this.todos.filter((todo) => todo.isCompleted).length === this.todos.length){
+      if (this.todos.filter((todo) => todo.isCompleted).length === this.todos.length) {
         this.toggleState = true;
       }
 
@@ -128,6 +145,9 @@ export default {
 
 
   mounted() {
+
+    window.addEventListener('hashchange', function () {})
+
     //load stored todos
     if (localStorage.getItem('todos')) {
       try {
@@ -163,11 +183,14 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-#app{
+
+#app {
+  background-color: green;
   position: absolute;
   width: 100%;
   height: 100%;
 }
+
 :root {
   --color-body: #4d4d4d;
 }
@@ -207,6 +230,7 @@ a:visited {
   text-decoration: none;
   color: #b7b7b7;
 }
+
 a:hover {
   color: #b7b7b7;
   text-decoration: underline;

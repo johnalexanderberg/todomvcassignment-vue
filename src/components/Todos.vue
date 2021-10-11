@@ -1,8 +1,9 @@
 <template>
   <ul>
     <ToggleAllButton v-if='todos.length > 0' @onToggleAll="onToggleAll" :toggleState="toggleState"></ToggleAllButton>
-    <li :key="todo.id" v-for="todo in todos">
-      <Todo @onOutsideClick="handleOutsideClick" :isEditing="isEditing" @onSubmit="handleEdit" @onDblClick="handleDblClick" @onDeleteClick="$emit('onDeleteClick', todo.id)" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
+    <li :key="todo.id" v-for="todo in filteredTodos">
+      <Todo :isEditing="isEditing" @onSubmit="handleEdit" @onDblClick="handleDblClick"
+            @onDeleteClick="$emit('onDeleteClick', todo.id)" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
     </li>
   </ul>
 </template>
@@ -17,60 +18,68 @@ export default {
   name: "Todos",
   props: {
     todos: Array,
-    toggleState: Boolean
+    toggleState: Boolean,
+    isEditing: Boolean,
+    filter: String
   },
   components: {
     ToggleAllButton,
     Todo
   },
-  data() {
-    return {
-    isEditing : false
-    }
-  },
   methods: {
-    handleOutsideClick(id){
 
-      alert(id)
-
-      //this.isEditing = false;
-    },
-    onToggleAll(toggleState){
+    onToggleAll(toggleState) {
       this.$emit('onToggleAll', toggleState)
     },
-    handleDblClick(id){
-      if (this.isEditing === false){
+    handleDblClick(id) {
+
+      // if else statement is to reset isEditing states before editing a new one
+      //first we check if an item is currently being edited and reset state.
+      if (this.isEditing === true) {
+        this.todos.forEach((todo) => {
+          if (todo.isEditing === true) {
+            todo.isEditing = false;
+          }
+        })
+        //else no item is currently being edited and we can set isEditing to true without looping through the items.
+      } else {
         this.isEditing = true;
 
-        this.todos.forEach((todo) => {
-          if (todo.id === id){
-            todo.isEditing = true
-          }
-        })
-      } else {
-        this.todos.forEach((todo) => {
-          if (todo.isEditing === true){
-            todo.isEditing = false;
-
-            this.todos.forEach((todo) => {
-              if (todo.id === id) {
-                todo.isEditing = true;
-              }
-            })
-
-          }
-
-        })
       }
-      },
-    handleEdit(id){
+
+      //now we can set the individual items state to isEditing.
+      this.todos.forEach((todo) => {
+        if (todo.id === id) {
+          todo.isEditing = true;
+        }
+      })
+
+
+    },
+    handleEdit(id) {
       this.isEditing = false;
       this.todos.forEach((todo) => {
-        if (todo.id === id){
+        if (todo.id === id) {
           todo.isEditing = false;
         }
       })
     },
+  },
+  computed: {
+    filteredTodos() {
+
+      return this.todos.filter(todo => {
+
+        switch(location.hash) {
+          case '#active':
+            return !todo.isCompleted;
+          case '#completed':
+            return todo.isCompleted;
+          default:
+            return true;
+        }
+      });
+    }
   },
   emits: ['onClick', 'onToggleAll']
 }

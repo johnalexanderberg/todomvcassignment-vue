@@ -4,7 +4,7 @@
         todos.filter((todo) => todo.isCompleted === false).length
       }} {{ todos.filter((todo) => todo.isCompleted === false).length === 1 ? 'item' : 'items' }} left</span>
     <div class="buttons">
-      <button>All</button>
+      <button @click="handleAllClick">All</button>
       <button>Active</button>
       <button>Completed</button>
     </div>
@@ -20,6 +20,11 @@ export default {
     todos: Array,
     counter: Number
   },
+  methods: {
+    handleAllClick() {
+
+    }
+  }
 }
 
 

@@ -1,7 +1,7 @@
 <template>
   <li :class="[todo.isCompleted ? 'isCompleted' : '']" @mouseenter="hover = true" @mouseleave="hover = false">
     <Button :class="[todo.isEditing ? 'editing' : '']" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
-    <form v-click-outside="$emit('onOutsideClick', todo.id)" :class="[todo.isEditing ? 'editing' : '']" @submit="$emit('onSubmit', todo.id)" @submit.prevent="preventDefault"><input v-model="todo.text" class="edit" type="text"></form>
+    <form :class="[todo.isEditing ? 'editing' : '']" @submit="$emit('onSubmit', todo.id)" @submit.prevent="preventDefault"><input v-model="todo.text" class="edit" type="text"></form>
     <h2 :class="[todo.isEditing ? 'editing' : '']" @dblclick="$emit('onDblClick', todo.id)" > {{ todo.text }} </h2>
     <div>
     <DeleteButton :class="[hover ? 'visible' : '', todo.isEditing ? 'editing' : '']" @onDeleteClick="$emit('onDeleteClick', todo.id)" :todo="todo"/>

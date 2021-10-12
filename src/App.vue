@@ -2,7 +2,7 @@
   <div id="app" @click="handleOutsideClick" @change="handleHashChange">
     <main>
       <AddTodo @onSubmit="handleSubmit"/>
-      <Todos :filter="filter" @onToggleAll="handleToggleAll" @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick"
+      <Todos @onToggleAll="handleToggleAll" @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick"
              :todos="todos" :toggleState="toggleState"/>
       <Footer v-if='todos.length > 0' :todos="todos"/>
     </main>
@@ -38,7 +38,6 @@ export default {
   },
   data() {
     return {
-      filter: String,
       todos: [],
       toggleState: Boolean,
       isEditing: Boolean,

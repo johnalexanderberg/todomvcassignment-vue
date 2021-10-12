@@ -19,8 +19,7 @@ export default {
   props: {
     todos: Array,
     toggleState: Boolean,
-    isEditing: Boolean,
-    filter: String
+    isEditing: Boolean
   },
   components: {
     ToggleAllButton,

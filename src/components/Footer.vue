@@ -4,9 +4,9 @@
         todos.filter((todo) => todo.isCompleted === false).length
       }} {{ todos.filter((todo) => todo.isCompleted === false).length === 1 ? 'item' : 'items' }} left</span>
     <div class="buttons">
-      <button @click="handleAllClick">All</button>
-      <button @click="handleActiveClick">Active</button>
-      <button @click="handleCompletedClick">Completed</button>
+      <button id="all" :class="currentView" @click="handleAllClick">All</button>
+      <button id="active" :class="currentView" @click="handleActiveClick">Active</button>
+      <button id="completed" :class="currentView" @click="handleCompletedClick">Completed</button>
     </div>
   </footer>
 </template>
@@ -37,6 +37,18 @@ export default {
     },
 
   },
+  computed: {
+    currentView() {
+      switch (location.hash) {
+        case '#active':
+          return 'active';
+        case '#completed':
+          return 'completed';
+        default:
+          return 'all';
+      }
+    }
+  },
 
 }
 
@@ -46,7 +58,7 @@ export default {
 
 <style scoped>
 
-button, span{
+button, span {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 100;
   font-size: 15px;
@@ -69,6 +81,11 @@ button, span{
   padding: 8px 15px;
   box-shadow: 0 1px 1px rgb(0 0 0 / 20%), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgb(0 0 0 / 20%), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgb(0 0 0 / 20%);
 }
+
+#all.all, #completed.completed, #active.active {
+  border-color: rgba(175, 47, 47, 0.2);
+}
+
 
 button {
   background-color: white;

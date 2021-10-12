@@ -1,6 +1,6 @@
 <template>
   <li :class="[todo.isCompleted ? 'isCompleted' : '']" @mouseenter="hover = true" @mouseleave="hover = false">
-    <Button :class="[todo.isEditing ? 'editing' : '']" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
+    <CompletedButton :class="[todo.isEditing ? 'editing' : '']" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
     <form :class="[todo.isEditing ? 'editing' : '']" @submit="$emit('onSubmit', todo.id)" @submit.prevent="preventDefault"><input v-model="todo.text" class="edit" type="text"></form>
     <h2 :class="[todo.isEditing ? 'editing' : '']" @dblclick="$emit('onDblClick', todo.id)" > {{ todo.text }} </h2>
     <div>
@@ -12,13 +12,13 @@
 <script>
 
 
-import Button from './Button.vue'
+import CompletedButton from './CompletedButton.vue'
 import DeleteButton from './DeleteButton.vue'
 
 export default {
   name: "Todo",
   components: {
-    Button,
+    CompletedButton,
     DeleteButton
   },
   data() {

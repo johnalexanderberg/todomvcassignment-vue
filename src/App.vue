@@ -53,9 +53,8 @@ export default {
     handleOutsideClick(event) {
 
         for (let i = 0; i < this.todos.length; i++) {
-          console.log(this.todos[i].id, 'isEditing: ', this.todos[i].isEditing);
           if (this.todos[i].isEditing === true && !event.target.classList.contains('edit')) {
-            console.log('isEditing is true & clicked outside of ', this.todos[i].id)
+            console.log('isEditing is true & clicked outside of item: ', this.todos[i].id)
             console.log(event.target)
             this.todos[i].isEditing = false;
             this.isEditing = false;
@@ -185,7 +184,6 @@ export default {
 }
 
 #app {
-  background-color: green;
   position: absolute;
   width: 100%;
   height: 100%;

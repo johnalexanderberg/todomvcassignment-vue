@@ -70,10 +70,18 @@ button, span {
   text-align: center;
 }
 
-
 #clearCompleted {
   position: absolute;
   right: 12px;
+  border: none;
+}
+
+#clearCompleted:hover {
+  position: absolute;
+  right: 12px;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 #todo-count {
@@ -111,10 +119,6 @@ button {
 
 button:hover {
   border-color: rgba(175, 47, 47, 0.1);
-}
-
-button {
-
 }
 
 </style>

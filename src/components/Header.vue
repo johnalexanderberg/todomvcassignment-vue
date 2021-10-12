@@ -8,7 +8,7 @@
 <script>
 
 export default {
-  name: "AddTodo",
+  name: "Header",
   data() {
     return{
       text: ''

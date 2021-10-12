@@ -8,6 +8,7 @@
       <button id="active" :class="currentView" @click="handleActiveClick">Active</button>
       <button id="completed" :class="currentView" @click="handleCompletedClick">Completed</button>
     </div>
+    <button id="clearCompleted" v-if="todos.filter((todo) => todo.isCompleted === true).length > 0" @click="$emit('onClearCompletedClick')">Clear Completed</button>
   </footer>
 </template>
 
@@ -69,13 +70,23 @@ button, span {
   text-align: center;
 }
 
+
+#clearCompleted {
+  position: absolute;
+  right: 12px;
+}
+
 #todo-count {
-  float: left;
+  position: absolute;
+  left: 12px;
   text-align: center;
 
 }
 
 #navigation {
+  display: flex;
+  width: 100%;
+  justify-content: center;
   align-items: center;
   border-top: 1px solid #e6e6e6;
   padding: 8px 15px;
@@ -88,6 +99,7 @@ button, span {
 
 
 button {
+  margin: 0 4px;
   background-color: white;
   border: 1px solid transparent;
   border-radius: 3px;
@@ -98,7 +110,7 @@ button {
 }
 
 button:hover {
-  border-color: rgba(175, 47, 47, 0.2);
+  border-color: rgba(175, 47, 47, 0.1);
 }
 
 button {

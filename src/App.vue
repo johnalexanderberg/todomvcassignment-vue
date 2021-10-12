@@ -1,10 +1,10 @@
 <template>
   <div id="app" @click="handleOutsideClick" @change="handleHashChange">
     <main>
-      <AddTodo @onSubmit="handleSubmit"/>
-      <Todos @onToggleAll="handleToggleAll" @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick"
-             :todos="todos" :toggleState="toggleState"/>
-      <Footer v-if='todos.length > 0' :todos="todos"/>
+      <Header @onSubmit="handleSubmit"/>
+      <Todos @onDblClick="handleDblClick" @onEditSubmit="handleEditSubmit" @onToggleAll="handleToggleAll" @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick"
+             :todos="todos"/>
+      <Footer v-if='todos.length > 0' :todos="todos" @onClearCompletedClick="handleClearCompletedClick"/>
     </main>
 
     <footer id="footer">
@@ -16,14 +16,12 @@
       </p>
       <p>Part of <a href="https://todomvc.com/">TodoMVC</a></p>
     </footer>
-
-
   </div>
 </template>
 
 <script>
 
-import AddTodo from './components/AddTodo.vue'
+import Header from './components/Header.vue'
 import Todos from './components/Todos.vue'
 import Footer from './components/Footer.vue'
 
@@ -32,7 +30,7 @@ export default {
 
   name: 'App',
   components: {
-    AddTodo,
+    Header,
     Todos,
     Footer
   },
@@ -40,39 +38,76 @@ export default {
     return {
       todos: [],
       toggleState: Boolean,
-      isEditing: Boolean,
-      counter: Number
+      isEditing: Boolean
     }
   },
   methods: {
 
+    handleDblClick(id) {
+
+      console.log(this.isEditing)
+
+      //We need to reset isEditing states before editing a new one (we dont want to allow editing more than 1 item at a time).
+      if (this.isEditing === true) {
+        this.todos.forEach((todo) => {
+          todo.isEditing = false;
+        })
+      } else {
+        this.isEditing = true;
+      }
+
+      //now we can set the individual item's state to isEditing.
+      this.todos.forEach((todo) => {
+        if (todo.id === id) {
+          todo.isEditing = true;
+        }
+      })
+    },
+
+    handleEditSubmit(id) {
+
+      this.isEditing = false;
+      this.todos.forEach((todo) => {
+        if (todo.id === id) {
+          todo.isEditing = false;
+        }
+      });
+
+      this.saveTodos();
+
+
+    },
+
     handleHashChange(e) {
+      //todo vad skulle vi göra här?
       console.log(e);
     },
     handleOutsideClick(event) {
 
         for (let i = 0; i < this.todos.length; i++) {
           if (this.todos[i].isEditing === true && !event.target.classList.contains('edit')) {
-            console.log('isEditing is true & clicked outside of item: ', this.todos[i].id)
-            console.log(event.target)
             this.todos[i].isEditing = false;
             this.isEditing = false;
-
+            this.saveTodos();
           }
         }
-
     },
 
-    handleToggleAll(toggleState) {
+    handleToggleAll() {
+
+      if (this.todos.filter((todo) => todo.isCompleted === true).length === this.todos.length) {
 
       this.todos.forEach(todo => {
-        todo.isCompleted = toggleState ? true : false
+        todo.isCompleted = false
       });
-
-      this.toggleState = toggleState;
+      } else {
+        this.todos.forEach(todo => {
+          todo.isCompleted = true
+        });
+      }
 
       this.saveTodos();
-      this.saveToggleState();
+
     },
     handleCounter() {
       this.todos.forEach(todo => {
@@ -84,7 +119,11 @@ export default {
       })
 
     },
+    handleClearCompletedClick(){
+      this.todos = this.todos.filter((todo) => todo.isCompleted === false);
 
+      this.saveTodos();
+    },
     handleCompletedClick(id) {
       this.todos.forEach(todo => {
         if (todo.id === id) {
@@ -98,7 +137,6 @@ export default {
         this.toggleState = true;
       }
 
-      this.saveToggleState();
       this.saveTodos();
     },
     handleDeleteClick(id) {
@@ -115,15 +153,12 @@ export default {
       }
 
       const newTodo = {
-        //todo: always make unique IDs
+        //todo: göra unika id:n ist för random
         id: Math.round(Math.random() * 100000),
         text: text,
         isCompleted: false,
         isEditing: false
       }
-
-      this.toggleState = false;
-
 
       this.todos.push(newTodo)
       this.saveTodos();
@@ -132,11 +167,6 @@ export default {
     saveTodos() {
       const parsed = JSON.stringify(this.todos);
       localStorage.setItem('todos', parsed);
-    },
-    saveToggleState() {
-
-      const parsed = JSON.stringify(this.toggleState);
-      localStorage.setItem('todoToggle', parsed);
     },
 
   },
@@ -157,20 +187,8 @@ export default {
     this.todos.forEach((todo) => {
       todo.isEditing = false;
     })
-
-    //load toggle state
-    if (localStorage.getItem('todoToggle')) {
-      try {
-        this.toggleState = JSON.parse(localStorage.getItem('todoToggle'));
-      } catch (e) {
-        localStorage.removeItem('todoToggle');
-      }
-    }
-
   }
-
 }
-
 
 </script>
 

@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Interactions;
 using System;
 
 namespace assignmentToDoMVC
@@ -31,7 +32,7 @@ namespace assignmentToDoMVC
             input.SendKeys(Keys.Enter);
 
             var listElement = browser.FindElementByCssSelector("h2");
-            
+
             Assert.AreEqual("Crash on a deserted island", listElement.Text);
         }
 
@@ -60,15 +61,15 @@ namespace assignmentToDoMVC
         {
             browser.Url = "http://192.168.1.182:8080/";
             var input1 = browser.FindElementByCssSelector("[type='text']");
-            input1.SendKeys("Buy Cat Food");
+            input1.SendKeys("Find hidden tunnels");
             input1.SendKeys(Keys.Enter);
 
             var input2 = browser.FindElementByCssSelector("[type='text']");
-            input2.SendKeys("Go To Work");
+            input2.SendKeys("Fight a polarbear");
             input2.SendKeys(Keys.Enter);
 
             var input3 = browser.FindElementByCssSelector("[type='text']");
-            input3.SendKeys("Buy Christmas Presents");
+            input3.SendKeys("Try and fail to save friends");
             input3.SendKeys(Keys.Enter);
 
             var button = browser.FindElementByCssSelector("[class='completedButton']");
@@ -77,7 +78,40 @@ namespace assignmentToDoMVC
             var inputCount = browser.FindElementByCssSelector("[id='todo-count']");
 
             Assert.AreEqual("2 items left", inputCount.Text);
-            
+
+        }
+        [TestMethod]
+        public void EditingTest()
+        {
+            browser.Url = "http://192.168.1.182:8080/";
+            var input = browser.FindElementByCssSelector("[type='text']");
+            input.SendKeys("feel LOST");
+            input.SendKeys(Keys.Enter);
+
+            var listItem = browser.FindElementByCssSelector("h2").Text;
+
+            Assert.AreEqual(listItem, input);
+
+            Actions act = new Actions(browser);
+
+            //Double Click on list item
+            var editedText = browser.FindElementByCssSelector("[class='edit']");
+            act.DoubleClick(editedText).Perform();
+
+            editedText.SendKeys("Join a Fight Club");
+            editedText.SendKeys(Keys.Enter);
+
+            Assert.AreEqual("Join a Fight Club", editedText.Text);
+        }
+        [TestMethod]
+        public void URLHashChangeTest()
+        {
+
+        }
+        [TestMethod]
+        public void localStorageTest()
+        {
+
         }
 
         [TestCleanup]

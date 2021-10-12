@@ -160,6 +160,7 @@ form {
 
 form.editing {
   display: flex;
+  width: 100%;
 }
 
 input {

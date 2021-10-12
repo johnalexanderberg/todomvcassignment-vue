@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
+using System;
 
 namespace assignmentToDoMVC
 {
@@ -41,14 +42,18 @@ namespace assignmentToDoMVC
             var input = browser.FindElementByCssSelector("[type='text']");
             input.SendKeys("Try to escape the island");
             input.SendKeys(Keys.Enter);
+
             var tick1 = browser.FindElementByCssSelector("[id='todo-count']");
             Assert.AreEqual("1 item left", tick1.Text);
 
-            browser.FindElement().Click();
+            var button = browser.FindElementByCssSelector("[class='completedButton']");
+            button.Click();
+
             var tick2 = browser.FindElementByCssSelector("[id='todo-count']");
             Assert.AreEqual("0 items left", tick2.Text);
 
         }
+
 
         [TestMethod]
         public void countTest()
@@ -66,9 +71,12 @@ namespace assignmentToDoMVC
             input3.SendKeys("Buy Christmas Presents");
             input3.SendKeys(Keys.Enter);
 
-            var inputCount = browser.FindElementByCssSelector("h2");
+            var button = browser.FindElementByCssSelector("[class='completedButton']");
+            button.Click();
 
-            Assert.AreEqual(3, inputCount);
+            var inputCount = browser.FindElementByCssSelector("[id='todo-count']");
+
+            Assert.AreEqual("2 items left", inputCount.Text);
             
         }
 

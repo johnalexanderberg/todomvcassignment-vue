@@ -88,23 +88,27 @@ namespace assignmentToDoMVC
             input.SendKeys("feel LOST");
             input.SendKeys(Keys.Enter);
 
-            var listItem = browser.FindElementByCssSelector("[class='edit']");
+            var listItem = browser.FindElementByCssSelector("[class='edit']").Text;
 
-            Assert.AreEqual(listItem.Text, input.Text);
+            //Assert.AreEqual(listItem.Text, input.Text);
 
-            Actions act = new Actions(browser);
+            //new SelectElement(browser.FindElement(By.CssSelector("#agentSelectBox"))).Options.First(o => o.Text == "feel LOST").Click(); ;
+            new Actions(browser).DoubleClick(browser.FindElementByTagName(listItem)).Perform();
+
+
+            //Actions act = new Actions(browser);
 
             //Double Click on list item
-            var editedText = browser.FindElementByCssSelector("[class='edit']");
-          
-            act.DoubleClick(editedText).Perform();
+            //var editedText = browser.FindElementByCssSelector("[class='edit']");
+
+            //act.DoubleClick(editedText).Perform();
 
             var isEditingText = browser.FindElementByCssSelector("[class='editing']");
 
             isEditingText.SendKeys("Join a Fight Club");
             isEditingText.SendKeys(Keys.Enter);
 
-            Assert.AreEqual("Join a Fight Club", editedText.Text);
+            Assert.AreEqual("Join a Fight Club", listItem);
         }
         [TestMethod]
         public void URLHashChangeTest()

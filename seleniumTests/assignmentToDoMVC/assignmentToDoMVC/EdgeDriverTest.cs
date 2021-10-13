@@ -88,18 +88,21 @@ namespace assignmentToDoMVC
             input.SendKeys("feel LOST");
             input.SendKeys(Keys.Enter);
 
-            var listItem = browser.FindElementByCssSelector("h2").Text;
+            var listItem = browser.FindElementByCssSelector("[class='edit']");
 
-            Assert.AreEqual(listItem, input);
+            Assert.AreEqual(listItem.Text, input.Text);
 
             Actions act = new Actions(browser);
 
             //Double Click on list item
             var editedText = browser.FindElementByCssSelector("[class='edit']");
+          
             act.DoubleClick(editedText).Perform();
 
-            editedText.SendKeys("Join a Fight Club");
-            editedText.SendKeys(Keys.Enter);
+            var isEditingText = browser.FindElementByCssSelector("[class='editing']");
+
+            isEditingText.SendKeys("Join a Fight Club");
+            isEditingText.SendKeys(Keys.Enter);
 
             Assert.AreEqual("Join a Fight Club", editedText.Text);
         }

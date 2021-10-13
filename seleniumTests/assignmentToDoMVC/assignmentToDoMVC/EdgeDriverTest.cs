@@ -115,6 +115,20 @@ namespace assignmentToDoMVC
         [TestMethod]
         public void URLHashChangeTest()
         {
+            browser.Url = "http://192.168.1.182:8080/";
+            var input = browser.FindElementByCssSelector("[type='text']");
+            input.SendKeys("Being the second cutes guy in a hotel robbery");
+            input.SendKeys(Keys.Enter);
+
+            var button = browser.FindElementByCssSelector("[class='completedButton']");
+            button.Click();
+
+            var completedButton = browser.FindElementByCssSelector("[id='completed']");
+            completedButton.Click();
+
+            var newUrl = browser.Url;
+
+            Assert.AreEqual("http://192.168.1.182:8080/#completed", newUrl);
 
         }
         [TestMethod]

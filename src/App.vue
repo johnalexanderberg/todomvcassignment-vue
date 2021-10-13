@@ -45,8 +45,6 @@ export default {
 
     handleDblClick(id) {
 
-      console.log(this.isEditing)
-
       //We need to reset isEditing states before editing a new one (we dont want to allow editing more than 1 item at a time).
       if (this.isEditing === true) {
         this.todos.forEach((todo) => {
@@ -56,7 +54,7 @@ export default {
         this.isEditing = true;
       }
 
-      //now we can set the individual item's state to isEditing.
+      //then we set the individual item's state to isEditing.
       this.todos.forEach((todo) => {
         if (todo.id === id) {
           todo.isEditing = true;
@@ -78,7 +76,7 @@ export default {
 
     },
 
-    
+
     handleOutsideClick(event) {
 
         for (let i = 0; i < this.todos.length; i++) {
@@ -152,7 +150,7 @@ export default {
       const newTodo = {
         //todo: göra unika id:n ist för random
         id: Math.round(Math.random() * 100000),
-        text: text,
+        text: trimmedText,
         isCompleted: false,
         isEditing: false
       }

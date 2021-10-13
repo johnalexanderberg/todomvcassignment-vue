@@ -120,6 +120,10 @@ li:hover .deleteContainer {
 
 }
 
+.completedButton.editing>svg{
+  visibility: hidden;
+}
+
 /* List Item */
 li {
   height: 50px;

@@ -10,9 +10,6 @@ namespace assignmentToDoMVC
     [TestClass]
     public class EdgeDriverTest
     {
-        // In order to run the below test(s), 
-        // please follow the instructions from http://go.microsoft.com/fwlink/?LinkId=619687
-        // to install Microsoft WebDriver.
 
         private const string edgeDriverDirectory = @"D:\FrontEnd\edgedriver_win64";
         private EdgeDriver browser;
@@ -91,19 +88,9 @@ namespace assignmentToDoMVC
 
             var listItem = browser.FindElementByCssSelector("[class='edit']");
 
-            //Assert.AreEqual(listItem.Text, input.Text);
-
             new Actions(browser).DoubleClick(browser.FindElementByCssSelector("h2")).Perform();
             new Actions(browser).DoubleClick(browser.FindElementByCssSelector("[class='editing']")).Perform();
             
-
-            //Actions act = new Actions(browser);
-
-            //Double Click on list item
-            //var editedText = browser.FindElementByCssSelector("[class='edit']");
-
-            //act.DoubleClick(editedText).Perform();
-
             var isEditingText = browser.FindElementByCssSelector("[class='edit']");
 
             isEditingText.SendKeys(Keys.Backspace);
@@ -138,9 +125,6 @@ namespace assignmentToDoMVC
             var input = browser.FindElementByCssSelector("[type='text']");
             input.SendKeys("Fighting with mrs smith");
             input.SendKeys(Keys.Enter);
-
-            //browser.FindElement(By.CssSelector("html")).SendKeys(Keys.Control + "n");
-            //browser.SwitchTo().Window(browser.WindowHandles.Last());
 
             //Navigate to different site
             browser.Navigate().GoToUrl("http://google.com");

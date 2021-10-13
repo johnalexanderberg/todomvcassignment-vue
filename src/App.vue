@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @click="handleOutsideClick" @change="handleHashChange">
+  <div id="app" @click="handleOutsideClick">
     <main>
       <Header @onSubmit="handleSubmit"/>
       <Todos @onDblClick="handleDblClick" @onEditSubmit="handleEditSubmit" @onToggleAll="handleToggleAll" @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick"
@@ -78,10 +78,7 @@ export default {
 
     },
 
-    handleHashChange(e) {
-      //todo vad skulle vi göra här?
-      console.log(e);
-    },
+    
     handleOutsideClick(event) {
 
         for (let i = 0; i < this.todos.length; i++) {

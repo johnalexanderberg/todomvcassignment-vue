@@ -113,7 +113,7 @@ button {
   border-radius: 3px;
   display: inline;
   padding: 4px 7px;
-
+  outline: none;
   text-align: center;
 }
 

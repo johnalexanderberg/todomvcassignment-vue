@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Interactions;
 using System;
+using System.Linq;
 
 namespace assignmentToDoMVC
 {
@@ -85,35 +86,70 @@ namespace assignmentToDoMVC
         {
             browser.Url = "http://192.168.1.182:8080/";
             var input = browser.FindElementByCssSelector("[type='text']");
-            input.SendKeys("feel LOST");
+            input.SendKeys("LOST");
             input.SendKeys(Keys.Enter);
 
             var listItem = browser.FindElementByCssSelector("[class='edit']");
 
-            Assert.AreEqual(listItem.Text, input.Text);
+            //Assert.AreEqual(listItem.Text, input.Text);
 
-            Actions act = new Actions(browser);
+            new Actions(browser).DoubleClick(browser.FindElementByCssSelector("h2")).Perform();
+            new Actions(browser).DoubleClick(browser.FindElementByCssSelector("[class='editing']")).Perform();
+            
+
+            //Actions act = new Actions(browser);
 
             //Double Click on list item
-            var editedText = browser.FindElementByCssSelector("[class='edit']");
-          
-            act.DoubleClick(editedText).Perform();
+            //var editedText = browser.FindElementByCssSelector("[class='edit']");
 
-            var isEditingText = browser.FindElementByCssSelector("[class='editing']");
+            //act.DoubleClick(editedText).Perform();
 
+            var isEditingText = browser.FindElementByCssSelector("[class='edit']");
+
+            isEditingText.SendKeys(Keys.Backspace);
             isEditingText.SendKeys("Join a Fight Club");
             isEditingText.SendKeys(Keys.Enter);
 
-            Assert.AreEqual("Join a Fight Club", editedText.Text);
+            Assert.AreEqual(isEditingText.Text, listItem.Text);
         }
         [TestMethod]
         public void URLHashChangeTest()
         {
+            browser.Url = "http://192.168.1.182:8080/";
+            var input = browser.FindElementByCssSelector("[type='text']");
+            input.SendKeys("Being the second cutes guy in a hotel robbery");
+            input.SendKeys(Keys.Enter);
+
+            var button = browser.FindElementByCssSelector("[class='completedButton']");
+            button.Click();
+
+            var completedButton = browser.FindElementByCssSelector("[id='completed']");
+            completedButton.Click();
+
+            var newUrl = browser.Url;
+
+            Assert.AreEqual("http://192.168.1.182:8080/#completed", newUrl);
 
         }
         [TestMethod]
         public void localStorageTest()
         {
+            browser.Url = "http://192.168.1.182:8080/";
+            var input = browser.FindElementByCssSelector("[type='text']");
+            input.SendKeys("Fighting with mrs smith");
+            input.SendKeys(Keys.Enter);
+
+            //browser.FindElement(By.CssSelector("html")).SendKeys(Keys.Control + "n");
+            //browser.SwitchTo().Window(browser.WindowHandles.Last());
+
+            //Navigate to different site
+            browser.Navigate().GoToUrl("http://google.com");
+            //Navigate back to TodoList
+            browser.Navigate().GoToUrl("http://192.168.1.182:8080/");
+            //Find item in List
+            var reload = browser.FindElementByCssSelector("h2");
+            //Check that it's still the same as before
+            Assert.AreEqual("Fighting with mrs smith", reload.Text);
 
         }
 

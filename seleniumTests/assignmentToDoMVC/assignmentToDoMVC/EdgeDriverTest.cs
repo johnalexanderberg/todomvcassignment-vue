@@ -127,13 +127,14 @@ namespace assignmentToDoMVC
 
             //browser.FindElement(By.CssSelector("html")).SendKeys(Keys.Control + "n");
             //browser.SwitchTo().Window(browser.WindowHandles.Last());
+
+            //Navigate to different site
             browser.Navigate().GoToUrl("http://google.com");
-
+            //Navigate back to TodoList
             browser.Navigate().GoToUrl("http://192.168.1.182:8080/");
-
-
+            //Find item in List
             var reload = browser.FindElementByCssSelector("h2");
-
+            //Check that it's still the same as before
             Assert.AreEqual("Fighting with mrs smith", reload.Text);
 
         }

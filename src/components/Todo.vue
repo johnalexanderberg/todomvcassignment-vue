@@ -11,7 +11,7 @@
     </div>
 
     <form :class="[todo.isEditing ? 'editing' : '']" @submit="$emit('onSubmit', todo.id)"
-          @submit.prevent="preventDefault"><input v-model="todo.text" class="edit" type="text"></form>
+          @submit.prevent="preventDefault"><input v-model="todo.text" class="edit" type="text" autofocus></form>
     <h2 :class="[todo.isEditing ? 'editing' : '']" @dblclick="$emit('onDblClick', todo.id)"> {{ todo.text }} </h2>
 
     <div :class="[todo.isEditing ? 'editing' : '', 'deleteContainer']">
@@ -173,6 +173,7 @@ input {
   margin: 0;
   outline: none;
   border: 1px solid #959595;
+  cursor: text;
 }
 
 

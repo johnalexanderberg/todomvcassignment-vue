@@ -18,13 +18,14 @@
 export default {
   name: 'Footer',
   props: {
+    filter: String,
     todos: Array,
     counter: Number
   },
   methods: {
     handleAllClick() {
       location.hash = '';
-      location.reload();
+
     },
     handleCompletedClick() {
       location.hash = '#completed';
@@ -32,13 +33,13 @@ export default {
     },
     handleActiveClick() {
       location.hash = '#active';
-      location.reload();
+
     },
 
   },
   computed: {
     currentView() {
-      switch (location.hash) {
+      switch (this.filter) {
         case '#active':
           return 'active';
         case '#completed':
@@ -51,7 +52,9 @@ export default {
 
 }
 
+
 </script>
+
 
 <style scoped>
 

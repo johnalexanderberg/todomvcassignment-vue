@@ -2,9 +2,9 @@
   <div id="app" @click="handleOutsideClick">
     <main>
       <Header @onSubmit="handleSubmit"/>
-      <Todos @onDblClick="handleDblClick" @onEditSubmit="handleEditSubmit" @onToggleAll="handleToggleAll" @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick"
+      <Todos :key="filter" @onDblClick="handleDblClick" @onEditSubmit="handleEditSubmit" @onToggleAll="handleToggleAll" @onDeleteClick="handleDeleteClick" @onClick="handleCompletedClick"
              :todos="todos"/>
-      <Footer v-if='todos.length > 0' :todos="todos" @onClearCompletedClick="handleClearCompletedClick"/>
+      <Footer :filter="filter" v-if='todos.length > 0' :todos="todos" @onClearCompletedClick="handleClearCompletedClick"/>
     </main>
 
     <footer id="footer">
@@ -36,6 +36,7 @@ export default {
   },
   data() {
     return {
+      filter: String,
       todos: [],
       toggleState: Boolean,
       isEditing: Boolean
@@ -60,6 +61,7 @@ export default {
           todo.isEditing = true;
         }
       })
+
     },
 
     handleEditSubmit(id) {
@@ -166,7 +168,13 @@ export default {
 
   mounted() {
 
-    window.addEventListener('hashchange', function () {      location.reload();})
+    //we set key to filter on todos component so that it re-renders on hash change
+    const changeFilter = () => {
+      this.filter = location.hash;
+    };
+
+    window.addEventListener('hashchange', changeFilter)
+
 
     //load stored todos
     if (localStorage.getItem('todos')) {

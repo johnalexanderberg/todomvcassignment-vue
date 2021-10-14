@@ -168,6 +168,8 @@ export default {
 
   mounted() {
 
+    this.filter = '';
+
     //we set key to filter on todos component so that it re-renders on hash change
     const changeFilter = () => {
       this.filter = location.hash;

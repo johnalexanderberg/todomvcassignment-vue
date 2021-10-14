@@ -12,7 +12,6 @@
       </label>
     </div>
 
-
     <li :key="todo.id" v-for="todo in filteredTodos">
       <Todo :isEditing="isEditing" @onSubmit="$emit('onEditSubmit' ,todo.id)" @onDblClick="$emit('onDblClick', todo.id)"
             @onDeleteClick="$emit('onDeleteClick', todo.id)" @onClick="$emit('onClick', todo.id)" :todo="todo"/>
@@ -23,7 +22,6 @@
 <script>
 
 import Todo from './Todo.vue'
-
 
 export default {
   name: "Todos",

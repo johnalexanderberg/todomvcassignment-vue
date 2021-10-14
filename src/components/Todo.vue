@@ -38,13 +38,11 @@ export default {
   },
   methods: {
     preventDefault() {
-
     }
   },
   emits: ['onClick', 'onDeleteClick']
 }
 </script>
-
 
 <style scoped>
 
@@ -144,7 +142,6 @@ h2, input {
   font-weight: 100;
   text-align: left;
 }
-
 
 li.isCompleted h2 {
   color: #e3e3e3;

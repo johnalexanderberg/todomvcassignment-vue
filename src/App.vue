@@ -73,9 +73,7 @@ export default {
 
       this.saveTodos();
 
-
     },
-
 
     handleOutsideClick(event) {
 
@@ -166,7 +164,6 @@ export default {
 
   },
 
-
   mounted() {
 
     window.addEventListener('hashchange', function () {      location.reload();})
@@ -231,7 +228,6 @@ body {
   text-shadow: 0 1px 0 rgb(255 255 255 / 50%);
   margin-top: 60px;
 }
-
 
 a:link,
 a:active,

@@ -24,7 +24,7 @@ namespace assignmentToDoMVC
         public void inputTest()
         {
             // Navigate to our site
-            browser.Url = "http://192.168.1.182:8080/";
+            browser.Url = "https://johnalexanderberg.github.io/todomvcassignment-vue/";
             //Find where to and input our ToDo in the form
             var input = browser.FindElementByCssSelector("[type='text']");
             input.SendKeys("star in a really bad move with DiCaprio");
@@ -40,7 +40,7 @@ namespace assignmentToDoMVC
         [TestMethod]
         public void noItemsLeftTest()
         {
-            browser.Url = "http://192.168.1.182:8080/";
+            browser.Url = "https://johnalexanderberg.github.io/todomvcassignment-vue/";
             var input = browser.FindElementByCssSelector("[type='text']");
             input.SendKeys("Be FURY us during the war");
             input.SendKeys(Keys.Enter);
@@ -61,7 +61,7 @@ namespace assignmentToDoMVC
         [TestMethod]
         public void countItemsLeftTest()
         {
-            browser.Url = "http://192.168.1.182:8080/";
+            browser.Url = "https://johnalexanderberg.github.io/todomvcassignment-vue/";
             var input1 = browser.FindElementByCssSelector("[type='text']");
             input1.SendKeys("Play an angry Greek guy in TROY");
             input1.SendKeys(Keys.Enter);
@@ -85,7 +85,7 @@ namespace assignmentToDoMVC
         [TestMethod]
         public void EditingToDoTest()
         {
-            browser.Url = "http://192.168.1.182:8080/";
+            browser.Url = "https://johnalexanderberg.github.io/todomvcassignment-vue/";
             var input = browser.FindElementByCssSelector("[type='text']");
             input.SendKeys("Se7en");
             input.SendKeys(Keys.Enter);
@@ -108,7 +108,7 @@ namespace assignmentToDoMVC
         [TestMethod]
         public void URLHashChangeTest()
         {
-            browser.Url = "http://192.168.1.182:8080/";
+            browser.Url = "https://johnalexanderberg.github.io/todomvcassignment-vue/";
             var input = browser.FindElementByCssSelector("[type='text']");
             input.SendKeys("Being the second cutes guy in a hotel robbery");
             input.SendKeys(Keys.Enter);
@@ -121,13 +121,13 @@ namespace assignmentToDoMVC
 
             var newUrl = browser.Url;
 
-            Assert.AreEqual("http://192.168.1.182:8080/#completed", newUrl);
+            Assert.AreEqual("https://johnalexanderberg.github.io/todomvcassignment-vue/#completed", newUrl);
 
         }
         [TestMethod]
         public void localStorageTest()
         {
-            browser.Url = "http://192.168.1.182:8080/";
+            browser.Url = "https://johnalexanderberg.github.io/todomvcassignment-vue/";
             var input = browser.FindElementByCssSelector("[type='text']");
             input.SendKeys("Fighting with mrs smith");
             input.SendKeys(Keys.Enter);
@@ -135,7 +135,7 @@ namespace assignmentToDoMVC
             //Navigate to different site
             browser.Navigate().GoToUrl("http://google.com");
             //Navigate back to TodoList
-            browser.Navigate().GoToUrl("http://192.168.1.182:8080/");
+            browser.Navigate().GoToUrl("https://johnalexanderberg.github.io/todomvcassignment-vue/");
             //Find item in List
             var reload = browser.FindElementByCssSelector("h2");
             //Check that it's still the same as before

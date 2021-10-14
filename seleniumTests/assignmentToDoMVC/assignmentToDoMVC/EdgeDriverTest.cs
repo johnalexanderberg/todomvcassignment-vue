@@ -10,7 +10,7 @@ namespace assignmentToDoMVC
     [TestClass]
     public class EdgeDriverTest
     {
-
+        
         private const string edgeDriverDirectory = @"D:\FrontEnd\edgedriver_win64";
         private EdgeDriver browser;
 
@@ -23,15 +23,18 @@ namespace assignmentToDoMVC
         [TestMethod]
         public void inputTest()
         {
-            // Replace with your own test logic.
+            // Navigate to our site
             browser.Url = "http://192.168.1.182:8080/";
+            //Find where to and input our ToDo in the form
             var input = browser.FindElementByCssSelector("[type='text']");
-            input.SendKeys("Crash on a deserted island");
+            input.SendKeys("star in a really bad move with DiCaprio");
             input.SendKeys(Keys.Enter);
 
+            //Find the item in the List
             var listElement = browser.FindElementByCssSelector("h2");
 
-            Assert.AreEqual("Crash on a deserted island", listElement.Text);
+            //Check that item is the same as we sent in our form
+            Assert.AreEqual("star in a really bad move with DiCaprio", listElement.Text);
         }
 
         [TestMethod]
@@ -39,35 +42,36 @@ namespace assignmentToDoMVC
         {
             browser.Url = "http://192.168.1.182:8080/";
             var input = browser.FindElementByCssSelector("[type='text']");
-            input.SendKeys("Try to escape the island");
+            input.SendKeys("Be FURY us during the war");
             input.SendKeys(Keys.Enter);
 
-            var tick1 = browser.FindElementByCssSelector("[id='todo-count']");
-            Assert.AreEqual("1 item left", tick1.Text);
+            var itemCounter1 = browser.FindElementByCssSelector("[id='todo-count']");
+            Assert.AreEqual("1 item left", itemCounter1.Text);
 
+            //Find and click the "Completed button" 
             var button = browser.FindElementByCssSelector("[class='completedButton']");
             button.Click();
 
-            var tick2 = browser.FindElementByCssSelector("[id='todo-count']");
-            Assert.AreEqual("0 items left", tick2.Text);
+            var itemCounter2 = browser.FindElementByCssSelector("[id='todo-count']");
+            Assert.AreEqual("0 items left", itemCounter2.Text);
 
         }
 
 
         [TestMethod]
-        public void countTest()
+        public void countItemsLeftTest()
         {
             browser.Url = "http://192.168.1.182:8080/";
             var input1 = browser.FindElementByCssSelector("[type='text']");
-            input1.SendKeys("Find hidden tunnels");
+            input1.SendKeys("Play an angry Greek guy in TROY");
             input1.SendKeys(Keys.Enter);
 
             var input2 = browser.FindElementByCssSelector("[type='text']");
-            input2.SendKeys("Fight a polarbear");
+            input2.SendKeys("Get all the MONEY from the BALL");
             input2.SendKeys(Keys.Enter);
 
             var input3 = browser.FindElementByCssSelector("[type='text']");
-            input3.SendKeys("Try and fail to save friends");
+            input3.SendKeys("Dont forget to have HAPPY FEET");
             input3.SendKeys(Keys.Enter);
 
             var button = browser.FindElementByCssSelector("[class='completedButton']");
@@ -79,21 +83,23 @@ namespace assignmentToDoMVC
 
         }
         [TestMethod]
-        public void EditingTest()
+        public void EditingToDoTest()
         {
             browser.Url = "http://192.168.1.182:8080/";
             var input = browser.FindElementByCssSelector("[type='text']");
-            input.SendKeys("LOST");
+            input.SendKeys("Se7en");
             input.SendKeys(Keys.Enter);
 
             var listItem = browser.FindElementByCssSelector("[class='edit']");
 
+            //Double click to edit
             new Actions(browser).DoubleClick(browser.FindElementByCssSelector("h2")).Perform();
-            new Actions(browser).DoubleClick(browser.FindElementByCssSelector("[class='editing']")).Perform();
             
+            //Double click to mark all text and press backspace to clear input
+            new Actions(browser).DoubleClick(browser.FindElementByCssSelector("[class='editing']")).Perform();
             var isEditingText = browser.FindElementByCssSelector("[class='edit']");
-
             isEditingText.SendKeys(Keys.Backspace);
+
             isEditingText.SendKeys("Join a Fight Club");
             isEditingText.SendKeys(Keys.Enter);
 

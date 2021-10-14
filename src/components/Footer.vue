@@ -25,7 +25,6 @@ export default {
     handleAllClick() {
       location.hash = '';
       location.reload();
-
     },
     handleCompletedClick() {
       location.hash = '#completed';
@@ -34,7 +33,6 @@ export default {
     handleActiveClick() {
       location.hash = '#active';
       location.reload();
-
     },
 
   },
@@ -53,9 +51,7 @@ export default {
 
 }
 
-
 </script>
-
 
 <style scoped>
 

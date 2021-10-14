@@ -25,11 +25,9 @@ export default {
   methods: {
     handleAllClick() {
       location.hash = '';
-
     },
     handleCompletedClick() {
       location.hash = '#completed';
-      location.reload();
     },
     handleActiveClick() {
       location.hash = '#active';
